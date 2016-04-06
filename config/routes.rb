@@ -1,4 +1,4 @@
 Literature::Engine.routes.draw do
-  resources :credentials
+  root to: "references#index"
   resources :references
 end

@@ -1,10 +1,9 @@
 class CreateLiteratureReferences < ActiveRecord::Migration
   def change
     create_table :literature_references do |t|
-      t.string :title
-      t.string :author
-
-      t.timestamps null: false
+      t.integer :zotero_key
+      t.integer :object_id
+      t.string :object_type
     end
   end
 end

@@ -1,3 +1,15 @@
-= Literature
+TODO:
+generate rake task:
 
-This project rocks and uses MIT-LICENSE.
+  @consumer = OAuth::Consumer.new(ENV['ZOTERO_KEY'], ENV['ZOTERO_SECRET'],
+      :site               => "https://www.zotero.org",
+      :request_token_path => '/oauth/request',
+      #:authorize_path     => '/oauth/authorize',
+      :access_token_path  => '/oauth/access')
+  @request_token = @consumer.get_request_token
+  @request_token.authorize_url
+  #copy verifier to <x>
+  @access_token = @request_token.get_access_token(:oauth_verifier => <x>)
+  #Set env with:
+  @access_token.token
+  @access_token.secret

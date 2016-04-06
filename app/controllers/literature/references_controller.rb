@@ -1,4 +1,5 @@
 require_dependency "literature/application_controller"
+require 'oauth'
 
 module Literature
   class ReferencesController < ApplicationController
@@ -6,7 +7,12 @@ module Literature
 
     # GET /references
     def index
-      @references = Reference.all
+      @consumer = OAuth::Consumer.new(ENV['ZOTERO_KEY'], ENV['ZOTERO_SECRET'],
+            :site               => "https://api.www.zotero.org")
+      @access_token = OAuth::AccessToken.new(@consumer, ENV['ZOTERO_TOKEN'],
+        ENV['ZOTERO_SECRET'])
+      @res = @access_token.get("https://api.zotero.org/users/"+
+        ENV["ZOTERO_ID"]+"/items?key=dK9x7PnEXSR3LzbZiW9IdvT0")
     end
 
     # GET /references/1
@@ -58,5 +64,24 @@ module Literature
       def reference_params
         params.require(:reference).permit(:title, :author)
       end
+
+      def setup_request_token
+        @consumer = OAuth::Consumer.new(ENV['ZOTERO_KEY'], ENV['ZOTERO_SECRET'],
+              :site               => "https://www.zotero.org",
+              :request_token_path => '/oauth/request',
+              #:authorize_path     => '/oauth/authorize',
+              :access_token_path  => '/oauth/access')
+        @request_token = @consumer.get_request_token
+      end
+
+      def setup_authentication
+        access_token = @request_token.get_access_token(:oauth_verifier => ENV['ZOTERO_VERIFIER'])
+        auth = {}
+        auth["token"] = access_token.token
+        auth["token_secret"] = access_token.secret
+        File.open('auth.yaml', 'w') {|f| YAML.dump(auth, f)}
+        access_token
+      end
+
   end
 end
