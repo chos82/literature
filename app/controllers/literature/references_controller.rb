@@ -29,6 +29,12 @@ module Literature
     end
 
     def write_zotero
+
+    end
+
+    # POST /references
+    def create
+      #@reaction = Reaction.find(params[:id])
       @reference = Reference.new
       @reference.bibtex = BibTeX.parse(params[:reference][:bibtex])[0]
       @consumer = OAuth::Consumer.new(ENV['ZOTERO_KEY'], ENV['ZOTERO_SECRET'],
@@ -44,17 +50,6 @@ module Literature
         redirect_to :action => 'index'
       else
         flash[:notice] = "Reference could not be saved."
-        render :new
-      end
-    end
-
-    # POST /references
-    def create
-      @reference = Reference.new(reference_params)
-
-      if @reference.save
-        redirect_to @reference, notice: 'Reference was successfully created.'
-      else
         render :new
       end
     end

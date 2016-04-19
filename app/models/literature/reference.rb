@@ -9,13 +9,13 @@ module Literature
       type  = bibtex.to_hash[:bibtex_type]
       case type
         when :article
-          @zotero = bibtex.zotero_journal_article
+          @zotero = zotero_journal_article
         when :book
-          @zotero = bibtex.zotero_book
+          @zotero = zotero_book
         when :inbook
-          @zotero = bibtex.zotero_book_section
+          @zotero = zotero_book_section
         else
-          @zotero = bibtex.zotero_document
+          @zotero = zotero_document
       end
       @zotero
     end
