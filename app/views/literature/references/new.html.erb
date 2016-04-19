@@ -1,6 +1,8 @@
 <h1>New Reference</h1>
 
-
+<% if !@res_hash.blank? %>
+<%= @res_hash['success'] %>
+<%end%>
 <%= render 'form' %>
 <%= link_to new_reference_path %>
 <%= link_to 'Back', references_path %>
