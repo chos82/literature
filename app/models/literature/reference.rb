@@ -1,4 +1,4 @@
-module Literature
+module Lit
   class Reference < ActiveRecord::Base
     require 'bibtex'
     has_and_belongs_to_many :reactions

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    literature (0.0.1)
+    lit (0.0.1)
       oauth
       oauth-plugin
       rails (~> 4.2.0)
@@ -124,7 +124,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  literature!
+  lit!
   sqlite3
 
 BUNDLED WITH

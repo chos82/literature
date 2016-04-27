@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount Literature::Engine => "/literature"
+  mount Lit::Engine => "/lit"
 end

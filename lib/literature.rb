@@ -1,4 +1,4 @@
-require "literature/engine"
+require "lit/engine"
 
-module Literature
+module Lit
 end

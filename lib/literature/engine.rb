@@ -1,5 +1,5 @@
-module Literature
+module Lit
   class Engine < ::Rails::Engine
-    isolate_namespace Literature
+    isolate_namespace Lit
   end
 end

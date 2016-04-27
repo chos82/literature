@@ -1,4 +1,4 @@
-module Literature
+module Lit
   module ReferencesHelper
   end
 end

@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :literature do
+# task :lit do
 #   # Task goes here
 # end

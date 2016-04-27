@@ -1,6 +1,6 @@
-class CreateLiteratureReferences < ActiveRecord::Migration
+class CreateLitReferences < ActiveRecord::Migration
   def change
-    create_table :literature_references do |t|
+    create_table :lit_references do |t|
       t.string :zotero_itemKey, limit: 20
 
       t.timestamps

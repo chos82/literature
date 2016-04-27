@@ -1,9 +1,9 @@
 require 'test_helper'
 
-module Literature
+module Lit
   class ReferencesControllerTest < ActionController::TestCase
     setup do
-      @reference = literature_references(:one)
+      @reference = lit_references(:one)
       @routes = Engine.routes
     end
 

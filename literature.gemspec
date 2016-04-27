@@ -1,12 +1,12 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "literature/version"
+require "lit/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "literature"
-  s.version     = Literature::VERSION
+  s.name        = "lit"
+  s.version     = Lit::VERSION
   s.authors     = [""]
   s.email       = ["christopher.ossner2@kit.edu"]
   s.homepage    = "http://www.chemotion.net/"

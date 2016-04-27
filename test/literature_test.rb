@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class LiteratureTest < ActiveSupport::TestCase
+class LitTest < ActiveSupport::TestCase
   test "truth" do
-    assert_kind_of Module, Literature
+    assert_kind_of Module, Lit
   end
 end

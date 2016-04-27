@@ -1,12 +1,13 @@
-require_dependency "literature/application_controller"
+require_dependency "lit/application_controller"
 require 'oauth'
 
-module Literature
+module Lit
   class ReferencesController < ApplicationController
     before_action :set_reference, only: [:show, :edit, :update, :destroy]
 
     # GET /references
-    def index
+    def reflist
+      @reaction = Reaction.find
       @consumer = OAuth::Consumer.new(ENV['ZOTERO_KEY'], ENV['ZOTERO_SECRET'],
             :site               => "https://api.www.zotero.org")
       @access_token = OAuth::AccessToken.new(@consumer, ENV['ZOTERO_TOKEN'],
@@ -34,7 +35,7 @@ module Literature
 
     # POST /references
     def create
-      #@reaction = Reaction.find(params[:id])
+      @reaction = Reaction.find(params[:id])
       @reference = Reference.new
       @reference.bibtex = BibTeX.parse(params[:reference][:bibtex])[0]
       @consumer = OAuth::Consumer.new(ENV['ZOTERO_KEY'], ENV['ZOTERO_SECRET'],
