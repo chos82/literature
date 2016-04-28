@@ -1,0 +1,1 @@
+/home/chris/complat/chemotion_ELN/aliasifyConfig.js

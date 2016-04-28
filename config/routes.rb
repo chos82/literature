@@ -1,6 +1,6 @@
 Lit::Engine.routes.draw do
-  #root to: "references#index"
+  root to: "references#reflist"
   get 'reflist/:id', to: 'references#reflist'
   post '/create/:id', to: 'references#create'
-  #resources :references
+  resources :references
 end

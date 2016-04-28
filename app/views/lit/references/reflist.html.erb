@@ -1,8 +1,13 @@
 <p id="notice"><%= notice %></p>
-<%= @reaction %><br />
-<h1>Listing References</h1>
-<br/>
-<%= @res.body %>
-<br/>
-<%= link_to 'New Reference', new_reference_path %>
-<a href="references/reflist/12">test<a/>
+
+<h1>Listing References for Reaction <%= params[:id]%></h1>
+
+<% @items.each do |item| %>
+<div>
+  <%= display_authors item['data']['creators'] %>&nbsp;
+  <%= item['data']['title'] %>
+</div>
+<% end %>
+
+<h1>New Reference</h1>
+<%= render 'form' %>

@@ -1,8 +1,9 @@
 module Lit
   class Reference < ActiveRecord::Base
+    #TODO write rake task that sets HABTM for reaction
+
     require 'bibtex'
-    has_and_belongs_to_many :reactions
-    #TODO virtual attribute for bibtex data
+    has_and_belongs_to_many :reactions, :class_name => "Reaction", :join_table => 'reactions_references'
     attr_accessor :bibtex
 
     def bibtex2zotero
