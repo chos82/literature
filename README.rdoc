@@ -13,3 +13,6 @@ generate rake task:
   #Set env with:
   @access_token.token
   @access_token.secret
+
+  add to reaction.rb:
+    has_and_belongs_to_many :references, :class_name => "Lit::Reference", :join_table => 'reactions_references'

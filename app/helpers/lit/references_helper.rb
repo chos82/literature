@@ -3,7 +3,7 @@ module Lit
 
     def display_authors authors
       res = ''
-      return res if authors.empty?
+      return res if !authors || authors.empty?
       if authors.length < 3
         i = 0
         authors.each{|a|

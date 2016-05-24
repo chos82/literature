@@ -18,17 +18,26 @@ module Lit
         i += 1
         key_list += ',' if i < references.length
       }
-      res = @access_token.get("https://api.zotero.org/users/"+
-        ENV["ZOTERO_ID"]+"/items/?itemKey="+key_list+"&key=dK9x7PnEXSR3LzbZiW9IdvT0")
-      @items = JSON.parse res.body
+      if !references.empty?
+        res = @access_token.get("https://api.zotero.org/users/"+
+          ENV["ZOTERO_ID"]+"/items/?itemKey="+key_list+"&key=dK9x7PnEXSR3LzbZiW9IdvT0")
+        @items = JSON.parse res.body
+      else
+        @items = []
+      end
     end
 
     # POST /references
     def create
       @reaction = Reaction.find(params[:id])
       @reference = Reference.new
-      #TODO catch exceptions
-      @reference.bibtex = BibTeX.parse([:reference][:bibtex])[0]
+      begin
+        @reference.bibtex = BibTeX.parse(params[:reference][:bibtex])[0]
+      rescue BibTeX::ParseError => e
+        flash[:notice] = e.message
+        redirect_to :action => 'reflist'
+        return
+      end
       connect2zotero
       @zotero = @reference.bibtex2zotero
       @res = @access_token.post("https://api.zotero.org/users/"+
@@ -43,7 +52,7 @@ module Lit
         redirect_to :action => 'reflist'
       else
         flash[:notice] = "Reference could not be saved. Zotero server message: " + @res_hash['failed']['0']['message']
-        render :new
+        redirect_to :action => 'reflist'
       end
     end
 
