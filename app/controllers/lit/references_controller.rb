@@ -27,7 +27,7 @@ module Lit
       connect2zotero
       @zotero = @reference.bibtex2zotero
       get_reaction_references
-      for i in 0..@items.length do
+      for i in 0...@items.length do
         if @items[i]['data']['title'] == @reference.bibtex.title
           #session[:duplicate] = @items[i]
           flash[:notice] = "The reference you posted already exists."

@@ -4,8 +4,16 @@
 
 <% @items.each do |item| %>
 <div>
-  <%= display_authors item['data']['creators'] %>&nbsp;
-  <%= item['data']['title'] %>
+  <% if !item['data']['DOI'].blank? %>
+    <a href="https://dx.doi.org/<%=item['data']['DOI']%>"><%= display_authors item['data']['creators'] %>&nbsp;
+    <%= item['data']['title'] %></a>
+  <% elsif !item['data']['url'].blank? %>
+    <a href="<%=item['data']['url']%>"><%= display_authors item['data']['creators'] %>&nbsp;
+    <%= item['data']['title'] %></a>
+  <% else %>
+    <%= display_authors item['data']['creators'] %>&nbsp;
+    <%= item['data']['title'] %>
+  <% end %>
 </div>
 <% end %>
 
