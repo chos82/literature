@@ -28,7 +28,7 @@ module Lit
       @zotero = @reference.bibtex2zotero
       get_reaction_references
       for i in 0...@items.length do
-        if @items[i]['data']['title'] == @reference.bibtex.title
+        if @items[i]['data']['title'].gsub(/\s/, '').downcase == @reference.bibtex.title.gsub(/\s/, '').downcase
           #session[:duplicate] = @items[i]
           flash[:notice] = "The reference you posted already exists."
           redirect_to :action => 'reflist' #'duplicate'
