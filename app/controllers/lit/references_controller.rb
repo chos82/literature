@@ -10,21 +10,7 @@ module Lit
       @reference = Reference.new
       @reaction = Reaction.find(params[:id])
       connect2zotero
-      key_list = ''
-      i = 0
-      references = @reaction.references
-      references.each{|r|
-        key_list += r.zotero_itemKey
-        i += 1
-        key_list += ',' if i < references.length
-      }
-      if !references.empty?
-        res = @access_token.get("https://api.zotero.org/users/"+
-          ENV["ZOTERO_ID"]+"/items/?itemKey="+key_list+"&key=dK9x7PnEXSR3LzbZiW9IdvT0")
-        @items = JSON.parse res.body
-      else
-        @items = []
-      end
+      get_reaction_references
     end
 
     # POST /references
@@ -40,6 +26,15 @@ module Lit
       end
       connect2zotero
       @zotero = @reference.bibtex2zotero
+      get_reaction_references
+      for i in 0..@items.length do
+        if @items[i]['data']['title'] == @reference.bibtex.title
+          #session[:duplicate] = @items[i]
+          flash[:notice] = "The reference you posted already exists."
+          redirect_to :action => 'reflist' #'duplicate'
+          return
+        end
+      end
       @res = @access_token.post("https://api.zotero.org/users/"+
         ENV['ZOTERO_ID'] + '/items/?key=dK9x7PnEXSR3LzbZiW9IdvT0', @zotero)
       @res_hash = JSON.parse @res.body
@@ -56,6 +51,7 @@ module Lit
       end
     end
 
+
     private
 
       # Only allow a trusted parameter "white list" through.
@@ -68,6 +64,24 @@ module Lit
               :site               => "https://api.www.zotero.org")
         @access_token = OAuth::AccessToken.new(@consumer, ENV['ZOTERO_TOKEN'],
           ENV['ZOTERO_SECRET'])
+      end
+
+      def get_reaction_references
+        key_list = ''
+        i = 0
+        references = @reaction.references
+        references.each{|r|
+          key_list += r.zotero_itemKey
+          i += 1
+          key_list += ',' if i < references.length
+        }
+        if !references.empty?
+          res = @access_token.get("https://api.zotero.org/users/"+
+            ENV["ZOTERO_ID"]+"/items/?itemKey="+key_list+"&key=dK9x7PnEXSR3LzbZiW9IdvT0")
+          @items = JSON.parse res.body
+        else
+          @items = []
+        end
       end
 
   end
